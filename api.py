@@ -1,18 +1,25 @@
 # Set the device with environment, default is cuda:0
 # export SENSEVOICE_DEVICE=cuda:1
 
-import os, re
-from fastapi import FastAPI, File, Form, UploadFile
-from fastapi.responses import HTMLResponse
+import time
+import os
+import re
 from typing_extensions import Annotated
 from typing import List
 from enum import Enum
-import torchaudio
-from model import SenseVoiceSmall
-from funasr.utils.postprocess_utils import rich_transcription_postprocess
 from io import BytesIO
+import logging
+
+import torch_npu
+from torch_npu.contrib import transfer_to_npu
+import torchaudio
+from funasr.utils.postprocess_utils import rich_transcription_postprocess
+from fastapi import FastAPI, File, Form, UploadFile
+
+from model import SenseVoiceSmall
 
 TARGET_FS = 16000
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", force=True)
 
 
 class Language(str, Enum):
@@ -25,29 +32,16 @@ class Language(str, Enum):
     nospeech = "nospeech"
 
 
-model_dir = "iic/SenseVoiceSmall"
-m, kwargs = SenseVoiceSmall.from_pretrained(model=model_dir, device=os.getenv("SENSEVOICE_DEVICE", "cuda:0"))
+model_dir = os.getenv("SENSEVOICE_MODEL_DIR", "iic/SenseVoiceSmall")
+device = os.getenv("SENSEVOICE_DEVICE", "cuda:0")
+print(f"---- 使用的 device：{device}; model_dir: {model_dir} ----")
+
+m, kwargs = SenseVoiceSmall.from_pretrained(model=model_dir, device=device)
 m.eval()
 
 regex = r"<\|.*\|>"
 
 app = FastAPI()
-
-
-@app.get("/", response_class=HTMLResponse)
-async def root():
-    return """
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset=utf-8>
-            <title>Api information</title>
-        </head>
-        <body>
-            <a href='./docs'>Documents of API</a>
-        </body>
-    </html>
-    """
 
 
 @app.post("/api/v1/asr")
@@ -56,6 +50,7 @@ async def turn_audio_to_text(
     keys: Annotated[str, Form(description="name of each audio joined with comma")] = None,
     lang: Annotated[Language, Form(description="language of audio content")] = "auto",
 ):
+    start_time = time.time()
     audios = []
     for file in files:
         file_io = BytesIO(await file.read())
@@ -63,8 +58,10 @@ async def turn_audio_to_text(
 
         # transform to target sample
         if audio_fs != TARGET_FS:
+            start_time = time.time()
             resampler = torchaudio.transforms.Resample(orig_freq=audio_fs, new_freq=TARGET_FS)
             data_or_path_or_list = resampler(data_or_path_or_list)
+            logging.info(f"{file.filename} 采样率转换耗时：{time.time() - start_time}")
 
         data_or_path_or_list = data_or_path_or_list.mean(0)
         audios.append(data_or_path_or_list)
@@ -86,6 +83,8 @@ async def turn_audio_to_text(
         fs=TARGET_FS,
         **kwargs,
     )
+    logging.info(f"推理总耗时：{time.time() - start_time}")
+
     if len(res) == 0:
         return {"result": []}
     for it in res[0]:

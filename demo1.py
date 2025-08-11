@@ -3,6 +3,8 @@
 # Copyright FunASR (https://github.com/FunAudioLLM/SenseVoice). All Rights Reserved.
 #  MIT License  (https://opensource.org/licenses/MIT)
 
+import torch_npu
+from torch_npu.contrib import transfer_to_npu
 from funasr import AutoModel
 from funasr.utils.postprocess_utils import rich_transcription_postprocess
 

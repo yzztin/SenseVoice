@@ -11,7 +11,8 @@ import numpy as np
 import torch
 import torchaudio
 
-
+import torch_npu
+from torch_npu.contrib import transfer_to_npu
 from funasr import AutoModel
 
 model = "iic/SenseVoiceSmall"
@@ -19,6 +20,8 @@ model = AutoModel(model=model,
 				  vad_model="iic/speech_fsmn_vad_zh-cn-16k-common-pytorch",
 				  vad_kwargs={"max_single_segment_time": 30000},
 				  trust_remote_code=True,
+				  device="cuda:2",
+				  disable_update=True,
 				  )
 
 import re
@@ -235,7 +238,7 @@ def launch():
 		
 		fn_button.click(model_inference, inputs=[audio_inputs, language_inputs], outputs=text_outputs)
 
-	demo.launch()
+	demo.launch(server_name="0.0.0.0", server_port=17860)
 
 
 if __name__ == "__main__":

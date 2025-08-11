@@ -1,4 +1,4 @@
-torch<=2.3
+torch<=2.3.1
 torchaudio
 modelscope
 huggingface
@@ -6,4 +6,5 @@ huggingface_hub
 funasr>=1.1.3
 numpy<=1.26.4
 gradio
-fastapi>=0.111.1
+fastapi
+uvicorn

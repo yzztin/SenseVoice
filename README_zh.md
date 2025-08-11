@@ -1,3 +1,5 @@
+<mark>**npu 调用的参考文档：[NPU 调用](./README_npu.md)**<mark>
+
 # SenseVoice
 
 「简体中文」|「[English](./README.md)」|「[日本語](./README_ja.md)」
@@ -401,5 +403,5 @@ python webui.py
 如果您在使用中遇到问题，可以直接在 github 页面提 Issues。欢迎语音兴趣爱好者扫描以下的钉钉群二维码加入社区群，进行交流和讨论。
 
 |                          FunASR                          |
-|:--------------------------------------------------------:|
+| :------------------------------------------------------: |
 | <img src="image/dingding_funasr.png" width="250"/></div> |
