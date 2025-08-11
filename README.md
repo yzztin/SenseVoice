@@ -1,3 +1,7 @@
+<mark>**npu 调用的参考文档：[NPU 调用](./README_npu.md)**<mark>
+<mark>**npu support document：[NPU support](./README_npu.md)**<mark>
+
+
 ([简体中文](./README_zh.md)|English|[日本語](./README_ja.md))
 
 
@@ -376,7 +380,7 @@ If you encounter problems in use, you can directly raise Issues on the github pa
 You can also scan the following DingTalk group QR code to join the community group for communication and discussion.
 
 |                          FunASR                          |
-|:--------------------------------------------------------:|
+| :------------------------------------------------------: |
 | <img src="image/dingding_funasr.png" width="250"/></div> |
 
 
