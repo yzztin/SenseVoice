@@ -13,7 +13,7 @@
 
 ### 2. 修改点
 
-- 由于 `torch-npu` 插件的支持，关键是需要在每次 `import torch` 之前，先行做到 `import torch_npu`
+- 完全基于 `torch-npu` 插件的支持，关键是需要在每次 `import torch` 之前，先行做到 `import torch_npu`
 - 以 `demo1.py` 为例，原始代码中开头调用了 `from funasr import AutoModel`（执行了 `import torch`），所以需要在其之前先导入：
     ```
     import torch_npu
