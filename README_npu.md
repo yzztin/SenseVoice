@@ -24,7 +24,7 @@
 
 ### 3. 使用
 
-1. 安装依赖：`requirements.txt` 是必装依赖，`reuqiremens_for_npu.txt` 中是昇腾环境中可能需要的依赖，按需安装即可
+1. 安装依赖：`requirements.txt` 是必装依赖，`reuqiremens_for_npu.txt` 是昇腾环境中可能需要的依赖，按需安装即可
 2. 执行测试： `python demo1.py`, `python demo2.py`, `python webui.py`
 3. 启动服务化接口：按需修改 `run_api.sh` 中的变量，执行 `chmod +x run_api.sh && ./run_api.sh`
 4. 接口测试：

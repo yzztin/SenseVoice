@@ -34,7 +34,8 @@ class Language(str, Enum):
 
 model_dir = os.getenv("SENSEVOICE_MODEL_DIR", "iic/SenseVoiceSmall")
 device = os.getenv("SENSEVOICE_DEVICE", "cuda:0")
-print(f"---- 使用的 device：{device}; model_dir: {model_dir} ----")
+
+logging.warning(f"---- 使用的 device：{device}; model_dir: {model_dir} ----")
 
 m, kwargs = SenseVoiceSmall.from_pretrained(model=model_dir, device=device)
 m.eval()
