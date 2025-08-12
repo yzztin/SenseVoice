@@ -18,6 +18,7 @@ res = m.inference(
     language="auto", # "zh", "en", "yue", "ja", "ko", "nospeech"
     use_itn=False,
     ban_emo_unk=False,
+    disable_update=True,
     **kwargs,
 )
 

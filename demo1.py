@@ -17,6 +17,7 @@ model = AutoModel(
     remote_code="./model.py",
     vad_model="fsmn-vad",
     vad_kwargs={"max_single_segment_time": 30000},
+    disable_update=True,
     device="cuda:0",
 )
 

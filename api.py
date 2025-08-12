@@ -98,4 +98,7 @@ async def turn_audio_to_text(
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=50000)
+    host = os.getenv("SENSEVOICE_HOST", "0.0.0.0")
+    port = os.getenv("SENSEVOICE_PORT", 9002)
+
+    uvicorn.run(app, host=host, port=port)

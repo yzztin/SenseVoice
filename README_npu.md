@@ -26,7 +26,7 @@
 
 1. 安装依赖：`requirements.txt` 是必装依赖，`reuqiremens_for_npu.txt` 是昇腾环境中可能需要的依赖，按需安装即可
 2. 执行测试： `python demo1.py`, `python demo2.py`, `python webui.py`
-3. 启动服务化接口：按需修改 `run_api.sh` 中的变量，执行 `chmod +x run_api.sh && ./run_api.sh`
+3. 启动服务化接口：按需修改 `service.env` 中的配置，执行 `source service.env`，随后执行 `python api.py`
 4. 接口测试：
     ```
     curl --location --request POST 'http://127.0.0.1:12345/api/v1/asr' \
@@ -35,6 +35,14 @@
     --form 'lang="ko"'
     ```
 
+
+### 4. 问题记录
+
+- 报错：`/usr/lib/aarch64-linux-gnu/libgomp.so.1: cannot allocate memory in static TLS block`
+- 解决：执行 `export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1:$LD_PRELOAD`，然后重试
+
+
 ### 参考链接：
 - https://bbs.huaweicloud.com/blogs/439085
 - https://github.com/FunAudioLLM/SenseVoice/pull/26
+- https://blog.csdn.net/mbdong/article/details/122321835
