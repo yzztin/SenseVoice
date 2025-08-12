@@ -18,20 +18,9 @@ from fastapi import FastAPI, File, Form, UploadFile
 
 from model import SenseVoiceSmall
 
-TARGET_FS = 16000
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", force=True)
 
-
-class Language(str, Enum):
-    auto = "auto"
-    zh = "zh"
-    en = "en"
-    yue = "yue"
-    ja = "ja"
-    ko = "ko"
-    nospeech = "nospeech"
-
-
+TARGET_FS = 16000
 model_dir = os.getenv("SENSEVOICE_MODEL_DIR", "iic/SenseVoiceSmall")
 device = os.getenv("SENSEVOICE_DEVICE", "cuda:0")
 
@@ -43,6 +32,16 @@ m.eval()
 regex = r"<\|.*\|>"
 
 app = FastAPI()
+
+
+class Language(str, Enum):
+    auto = "auto"
+    zh = "zh"
+    en = "en"
+    yue = "yue"
+    ja = "ja"
+    ko = "ko"
+    nospeech = "nospeech"
 
 
 @app.post("/api/v1/asr")
@@ -99,6 +98,6 @@ if __name__ == "__main__":
     import uvicorn
 
     host = os.getenv("SENSEVOICE_HOST", "0.0.0.0")
-    port = os.getenv("SENSEVOICE_PORT", 9002)
+    port = int(os.getenv("SENSEVOICE_PORT", 9002))
 
     uvicorn.run(app, host=host, port=port)

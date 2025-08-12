@@ -26,7 +26,7 @@
 
 1. 安装依赖：`requirements.txt` 是必装依赖，`reuqiremens_for_npu.txt` 是昇腾环境中可能需要的依赖，按需安装即可
 2. 执行测试： `python demo1.py`, `python demo2.py`, `python webui.py`
-3. 启动服务化接口：按需修改 `service.env` 中的配置，执行 `source service.env`，随后执行 `python api.py`
+3. 启动服务化接口：按需修改 `config.env` 中的配置，执行 `source config.env`，随后执行 `python api.py`
 4. 接口测试：
     ```
     curl --location --request POST 'http://127.0.0.1:12345/api/v1/asr' \
