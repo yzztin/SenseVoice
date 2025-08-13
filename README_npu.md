@@ -40,6 +40,8 @@
 
 - 报错：`/usr/lib/aarch64-linux-gnu/libgomp.so.1: cannot allocate memory in static TLS block`
 - 解决：执行 `export LD_PRELOAD=/usr/lib/aarch64-linux-gnu/libgomp.so.1:$LD_PRELOAD`，然后重试
+  
+- 上传多个文件时出错，但一个音频文件正常：不同版本的 `soundfile` 包的处理文件字节数据的逻辑不同，使用 `0.12.x` 以上的版本，`pip install -U soundfile`
 
 
 ### 参考链接：

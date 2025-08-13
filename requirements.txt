@@ -8,3 +8,4 @@ numpy<=1.26.4
 gradio
 fastapi
 uvicorn
+soundfile~=0.13.1
